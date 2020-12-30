@@ -1,37 +1,24 @@
 'use strict';
 
-const food = require('../models/food-collection');
+// if we did not use supergoose then we need to connect to our DB.
+// const mongoose = require('mongoose');
+// const MONGOOSE_URI = 'mongodb://localhost:27017/401d6-food';
+// mongoose.connect(MONGOOSE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// add supergoose to avoid test data saved into our DB
-// supergoose is built using mongoose;
-// require it and it will take of not saving into DB;
+require('@code-fellows/supergoose');
+
+const food = require('../models/food-collection.js');
 
 describe('Food Model', () => {
-
-    it('can create() a new food item' , async ()=> {
-        let obj = { name: 'test food 1', calories: 40, type: 'FRUIT' };
-        food.create(obj).then(result => {
-            console.log("result : ", result)
-            //compare result obj with obj by name, calories, type
-            Object.keys(obj).forEach( key => {
-                expect(result[key]).toEqual(obj[key]);
-            });
+  it('can create() a new food item', () => {
+    let obj = { name: '---test food 2000', calories: 999, type: 'FRUIT' };
+    return food.create(obj)
+      .then(result => {
+          console.log("result : ", result)
+        Object.keys(obj).forEach(key => {
+          expect(result[key]).toEqual(obj[key]);
         });
-    });
-
-    
-    // it('can get() a new food item' , async ()=> {
-    //     const id = "5fec48467921c498828208b7";
-    //     // const item = await food.get(id);
-    //     // console.log("item : ", item);
-    //     // expect(item._id).toEqual(id);
-        
-    //     let item = await food.get(id);
-    //      console.log("item : ", item)
-    //      expect(1).toEqual(1);
-             
-    // });
+      });
+  });
 
 });
-
-
